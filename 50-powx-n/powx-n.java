@@ -10,9 +10,10 @@ class Solution {
         double ans = 1;
 
         while (p > 0) {
-            if ((p & 1) == 1) ans *= x;
+            if (p % 2 == 1)
+                ans *= x;
             x *= x;
-            p >>= 1;
+            p /= 2;
         }
 
         return ans;
