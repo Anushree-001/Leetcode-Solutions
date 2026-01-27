@@ -1,25 +1,26 @@
 class Solution {
     public int lengthOfLongestSubstring(String s) {
 
-        int max = 0;
+        int[] freq = new int[256];   // frequency of characters (ASCII)
+        int left = 0;                // start of window
+        int maxLen = 0;              // answer
 
-        for (int i = 0; i < s.length(); i++) {
-            boolean[] seen = new boolean[256];
-            int count = 0;
+        // right = end of window
+        for (int right = 0; right < s.length(); right++) {
 
-            for (int j = i; j < s.length(); j++) {
+            char c = s.charAt(right);
+            freq[c]++;               // add character to window
 
-                if (seen[s.charAt(j)]) {
-                    break;
-                }
-
-                seen[s.charAt(j)] = true;
-                count++;
+            // if duplicate appears, shrink window from left
+            while (freq[c] > 1) {
+                freq[s.charAt(left)]--;
+                left++;
             }
 
-            max = Math.max(max, count);
+            // update maximum length
+            maxLen = Math.max(maxLen, right - left + 1);
         }
 
-        return max;
+        return maxLen;
     }
 }
